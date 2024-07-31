@@ -22,31 +22,30 @@ for i in range(100):
     entry = input.readline()
     gameID = i + 1
     numberOfSets = entry.count(";") + 1
-    # print("Now checking game",gameID)
     
     allSets = entry.partition(": ")[2].split(";")
 
+    minR = 0
+    minG = 0
+    minB = 0
 
     for set in allSets:
-        # print("Now checking next set")
         colors = set.split(",")
 
         for j in range(len(colors)):
             col = colors[j].split()
-            goodGame = color_is_ok(int(col[0]),col[1])
-            # print("goodGame is",goodGame)
-            if not goodGame:
-                # print("Illegal pull, stops checking this set.")
-                break
+            # int(col[0]) == amount
+            # col[1] == color
+            amount = int(col[0])
+            if col[1] == "red" and amount > minR:
+                minR = amount
+            if col[1] == "green" and amount > minG:
+                minG = amount
+            if col[1] == "blue" and amount > minB:
+                minB = amount
+    
+    power = minR*minG*minB
+    sum += power
 
-        if not goodGame:
-            # print("Illegal pull, stops checking this game.")
-            break
-
-    if not goodGame:
-        print("Game",gameID,"is illegal, continues to next game.")
-    else:
-        print("Game",gameID,"is legal!")
-        sum += gameID
 input.close()
-print("Sum of legal game ID:s is",sum)
+print("Sum of minimum cube set power is",sum)
