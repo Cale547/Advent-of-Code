@@ -16,7 +16,7 @@ def card_sort(n):
         case "A": return 14
         case "K": return 13
         case "Q": return 12
-        case "J": return 11
+        case "J": return 1
         case "T": return 10
         case _:
             return int(n)
@@ -40,30 +40,87 @@ for i,game in enumerate(all_games):
     hand.sort(key = card_sort)
     handTypes = list(dict.fromkeys(hand))
     nTypes = len(handTypes)
-    #print(nTypes)
+    nJacks = hand.count("J")
 
+    match nJacks:
+        case 5:
+            fiveKind.append(game)
+            print("Fivekind added")
+            continue
+        case 4:
+            fiveKind.append(game)
+            print("Fivekind added")
+            continue
+        case 3:
+            if nTypes == 2:
+                fiveKind.append(game)
+                print("Fivekind added")
+            else:
+                fourKind.append(game)
+                print("Fourkind added")
+            continue
+        case 2:
+            match nTypes:
+                case 2:
+                    fiveKind.append(game)
+                    print("Fivekind added")
+                    continue
+                case 3:
+                    fourKind.append(game)
+                    print("Fourkind added")
+                    continue
+                case 4:
+                    threeKind.append(game)
+                    print("Threekind added")
+                    continue
+        case 1:
+            match nTypes:
+                case 2:
+                    fiveKind.append(game)
+                    print("Fivekind added")
+                    continue
+                case 4:
+                    threeKind.append(game)
+                    print("Threekind added")
+                    continue
+                case 5:
+                    onePair.append(game)
+                    print("Onepair added")
+                    continue
+                case 3:
+                    typeCount = []
+                    for t in handTypes:
+                        typeCount.append(hand.count(t))
+                    if 3 in typeCount:
+                        fourKind.append(game)
+                        print("Fourkind added")
+                        continue
+                    fullHouse.append(game)
+                    print("Fullhouse added")
+                    continue
+    
     match nTypes:
         case 1:
             fiveKind.append(game)
-            #print("Fivekind added")
+            print("Fivekind added")
             continue
         case 4:
             onePair.append(game)
-            #print("onePair added")
+            print("onePair added")
             continue
         case 5:
             highCard.append(game)
-            #print("highCard added")
+            print("highCard added")
             continue
 
     firstCard = hand[0]
     if nTypes == 2:
         if hand.count(firstCard) == 4 or hand.count(firstCard) == 1:
             fourKind.append(game)
-            #print("fourKind added")
+            print("fourKind added")
         else:
             fullHouse.append(game)
-            #print("fullHouse added")
+            print("fullHouse added")
         continue
     if nTypes == 3:
         typeCount = []
@@ -71,10 +128,10 @@ for i,game in enumerate(all_games):
             typeCount.append(hand.count(t))
         if 3 in typeCount:
             threeKind.append(game)
-            #print("threeKind added")
+            print("threeKind added")
             continue
         twoPair.append(game)
-        #print("twoPair added")
+        print("twoPair added")
 
 for i,gametype in enumerate(GAMETYPES):
     if len(gametype) != 0:
@@ -87,7 +144,7 @@ for i,gametype in enumerate(GAMETYPES):
             case 5: name = "twoPair"
             case 6: name = "onePair"
             case 7: name = "highCard"
-        print(name,"has the games:",gametype)
+        #print(name,"has the games:",gametype)
 
 all_games.clear()
 for gameList in GAMETYPES:
@@ -98,12 +155,13 @@ for gameList in GAMETYPES:
 
 for game in all_games:
     print(game)
+    pass
 
 ans = 0
 maxRank = nLines
 for i,game in enumerate(all_games):
     newWin = int(game[1])*(maxRank-i)
-    print(game[1],"*",maxRank-i)
+    #print(game[1],"*",maxRank-i)
 
     ans += int(game[1])*(maxRank-i)
 print("Total winnings is",ans)

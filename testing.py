@@ -1,6 +1,8 @@
-hej = "hej"
-h = hej.index("h")
-e = hej.index("e")
-j = hej.index("j")
-hejsan = hej.index("Hejsan")
-print("h, e, j is",h,e,j,hejsan)
+hej = open("L8ex.txt")
+first = hej.readline()
+hej.read
+
+
+hej = hej.readlines()
+for i in hej:
+    print(i.strip())
