@@ -18,12 +18,23 @@ for m in full_maps:
 instrIndex = 0
 mapIndex = 0
 steps = 0
+
+unique_maps = 0
+collected_maps = []
+
 current_map = atMap[0]
 while current_map != "ZZZ":
+#for i in range(14992):
     current_map = atMap[mapIndex]
     #print(current_map)
     if current_map == "JTK":
-        print("Found",current_map,"again")
+        #print("Found",current_map,"again")
+        pass
+    if current_map not in collected_maps:
+        collected_maps.append(current_map)
+        unique_maps += 1
+        print(unique_maps)
+        #finds 134 unique maps after running for >10 minutes
     if current_map == "ZZZ":
         print("Found it!")
         break
@@ -33,6 +44,8 @@ while current_map != "ZZZ":
     else: mapIndex = atMap.index(goRight[mapIndex])
     instrIndex = (instrIndex + 1) % len(instructions)
 print("It took",steps,"steps to get to ZZZ.")
+print(unique_maps)
+print(collected_maps)
 
 #print(instructions[0])
 
