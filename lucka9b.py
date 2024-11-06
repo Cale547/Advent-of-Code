@@ -7,9 +7,10 @@ for line in INPUT:
     temp = []
     for n in line:
         temp.append(int(n))
+    temp.reverse()
     lines.append(temp)
 
-#print(lines)
+print(lines)
 
 for baseLine in lines:
     hopLines = [baseLine]
@@ -18,7 +19,7 @@ for baseLine in lines:
     while True:
         newLine = []
         for i in range(1,len(currentLine)):
-            newLine.append(currentLine[i]-currentLine[i-1])
+            newLine.append(currentLine[i-1]-currentLine[i])
         hopLines.append(newLine)
 
         if sum(newLine) != 0:
@@ -27,11 +28,11 @@ for baseLine in lines:
             break
 
     hopLines.reverse() # Will reverse the list so it starts with the zero-list
-    #print(hopLines)
+    print(hopLines)
 
     toAdd = 0
     for i, vals in enumerate(hopLines):
-        vals.append(vals[-1] + toAdd)
+        vals.append(vals[-1] - toAdd)
         toAdd = vals[-1]
     FINAL_ANS += hopLines[-1][-1]
     #print(FINAL_ANS)
