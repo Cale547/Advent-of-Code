@@ -33,7 +33,7 @@ for i,ROW in enumerate(INPUT):
         SAFE = True
         for NEXT_CHAR in TRIM_DAMP[2:]:
             if 1 <= abs(NEXT_CHAR - CURRENT_CHAR) <= 3:
-                if (NEXT_CHAR-CURRENT_CHAR < 0) != ASCENDING: # if (is Descending) != (is Ascending)
+                if (NEXT_CHAR < CURRENT_CHAR) != ASCENDING: # if (is Descending) != (is Ascending)
                     CURRENT_CHAR = NEXT_CHAR
                 else:
                     print("ASC/DESC violation in",CURRENT_ROW)
