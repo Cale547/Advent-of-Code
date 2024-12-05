@@ -11,10 +11,6 @@ for line in INPUT:
     elif line.strip() != '':
         updates.append(line.strip().split(","))
 
-#print(type(rules))
-#print((updates))
-
-
 answer = 0
 for i,u in enumerate(updates):
     update_okay = True
