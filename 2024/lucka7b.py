@@ -43,6 +43,7 @@ for i,row in enumerate(INPUT):
 
 total_calibration_result = 0
 for i,real_result in enumerate(test_values):
+    print(i)
     factors = numbers[i]
     # number of permutations = 3^(len(factors) - 1)
     # largest potential number is 3^11 = 177147...
