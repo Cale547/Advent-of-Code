@@ -30,17 +30,11 @@ for i,row in enumerate(INPUT):
         new_numbers.append(int(num))
     numbers.append(new_numbers)
 
-#lengths = []
-#for l in numbers:
-#    lengths.append(len(l))
-#print(max(lengths))
-
-
-
 total_calibration_result = 0
 for i,real_result in enumerate(test_values):
     factors = numbers[i]
     # number of permutations = 2^(len(factors) - 1)
+    # largest potential number is 2^11 = 2048
 
     # 0 is +
     # 1 is *
@@ -64,6 +58,4 @@ for i,real_result in enumerate(test_values):
         
         operations = permutate_operations(operations)
 
-    #print(factors[:-1])
-
-    #print(result,"from",factors)
+print("Final result is",total_calibration_result)
