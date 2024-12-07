@@ -54,7 +54,11 @@ while 0 < guardRow < len(lab_map)-1 and 0 < guardCol < len(lab_map[0])-1:
         else:
             direction = (direction + 1) % 4
 visited += 1 # the one square the guard exited on
-for r in lab_map:
-    print(r)
+
+with open("2024/testMap.txt","w",encoding="UTF8") as f:
+    for r in lab_map:
+        toWrite = ''.join(r)+'\n'
+        f.write(toWrite)
+
 
 print(visited)
