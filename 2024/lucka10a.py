@@ -8,16 +8,16 @@ def number_of_trails(a_map, a_row, a_col, tagged):
         return 1
     #print(a_row,a_col,current,counter)
     counter = 0
-    if 0 < a_row < len(a_map) and int(a_map[a_row-1][a_col]) == current+1:
+    if 0 < a_row and int(a_map[a_row-1][a_col]) == current+1:
         #print("Go up")
         counter += number_of_trails(a_map, a_row-1, a_col, tagged)
-    if 0 <= a_col < len(a_map)-1 and int(a_map[a_row][a_col+1]) == current+1:
+    if a_col < len(a_map)-1 and int(a_map[a_row][a_col+1]) == current+1:
         #print("Go right")
         counter += number_of_trails(a_map, a_row, a_col+1, tagged)
-    if 0 <= a_row < len(a_map)-1 and int(a_map[a_row+1][a_col]) == current+1:
+    if a_row < len(a_map)-1 and int(a_map[a_row+1][a_col]) == current+1:
         #print("Go down")
         counter += number_of_trails(a_map, a_row+1, a_col, tagged)
-    if 0 < a_col < len(a_map) and int(a_map[a_row][a_col-1]) == current+1:
+    if 0 < a_col and int(a_map[a_row][a_col-1]) == current+1:
         #print("Go left")
         counter += number_of_trails(a_map, a_row, a_col-1, tagged)
     #print("counter is",counter)
