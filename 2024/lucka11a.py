@@ -1,3 +1,5 @@
+import time
+
 def blink(stone, blinks):
     #print("Blinking at stone engraved with",stone,"with",blinks,"blinks left.")
     stone_count = 1
@@ -23,6 +25,8 @@ def blink(stone, blinks):
         stone_count += blink(new_stone, blinks-1)
     return stone_count
 
+start = time.time()
+
 FILENAME = "2024/L11.txt"
 with open(FILENAME, encoding="UTF8") as f:
     INPUT = f.readlines()
@@ -33,3 +37,5 @@ rocks_found = 0
 for rock in rock_map:
     rocks_found += blink(rock, 25)
 print("In the final line,",rocks_found,"rocks lie.")
+stop = time.time()
+print("This took",stop-start,"seconds")
