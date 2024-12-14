@@ -15,14 +15,11 @@ for i,row in enumerate(ant_map):
     for j,current in enumerate(row):
         if current == '.':
             continue
-
-        antenna_type = current
         ant_rows.append(i)
         ant_cols.append(j)
 
 
 antinodes = 0
-pairs = 0
 tagged = []
 for i in range(len(ant_rows)-1):
     row1 = ant_rows[i]
@@ -32,7 +29,6 @@ for i in range(len(ant_rows)-1):
         col2 = ant_cols[j]
         if ant_map[row1][col1] != ant_map[row2][col2]:
             continue
-        pairs+=1
         row_diff = row1-row2
         col_diff = col1-col2
 
@@ -49,4 +45,4 @@ for i in range(len(ant_rows)-1):
             antinodes += 1
             tagged.append(str(pot_row2)+str(pot_col2))
 
-print("Total number of antinodes:",antinodes,"from",pairs,"pairs.")
+print("Total number of antinodes:",antinodes)
