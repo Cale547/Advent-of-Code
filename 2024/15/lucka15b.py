@@ -1,4 +1,41 @@
 import keyboard
+def scout_up(row, col): # call this on a box location to see if it can move up
+    if ware_map[row-1][col] == '#' or ware_map[row-1][col+1] == '#':
+        return False
+    
+    if ware_map[row-1][col] == '.' and ware_map[row-1][col+1] == '.':
+        return True
+    
+    if ware_map[row-1][col] == '[':
+        return scout_up(row-1, col)
+    
+    if ware_map[row-1][col] == ']' and ware_map[row-1][col+1] == '.':
+        return scout_up(row-1, col-1)
+
+    if ware_map[row-1][col] == '.' and ware_map[row-1][col+1] == '[':
+        return scout_up(row-1, col+1)
+    
+    if ware_map[row-1][col] == ']' and ware_map[row-1][col+1] == '[': # scouting double boxes
+        return (scout_up(row-1, col-1) and scout_up(row-1, col+1))
+
+def scout_down(row, col): # call this on a box location to see if it can move down
+    if ware_map[row+1][col] == '#' or ware_map[row+1][col+1] == '#':
+        return False
+    
+    if ware_map[row+1][col] == '.' and ware_map[row+1][col+1] == '.':
+        return True
+    
+    if ware_map[row+1][col] == '[':
+        return scout_down(row+1, col)
+    
+    if ware_map[row+1][col] == ']' and ware_map[row+1][col+1] == '.':
+        return scout_down(row+1, col-1)
+
+    if ware_map[row+1][col] == '.' and ware_map[row+1][col+1] == '[':
+        return scout_down(row+1, col+1)
+    
+    if ware_map[row+1][col] == ']' and ware_map[row+1][col+1] == '[': # scouting double boxes
+        return (scout_down(row+1, col-1) and scout_down(row+1, col+1))
 
 def go_up(row, col):
     global rob_row
@@ -19,15 +56,13 @@ def go_up(row, col):
             go_up(row-1, col+1)
 
         elif ware_map[row-1][col] == ']' and ware_map[row-1][col+1] == '[': # moving double boxes
-            above_two_boxes = [ware_map[row-2][col-1], ware_map[row-2][col], ware_map[row-2][col+1], ware_map[row-2][col+2]]
-            if '#' in above_two_boxes:
-                return
-            go_up(row-1, col-1)
-            go_up(row-1, col+1)
+            if (scout_up(row-1, col-1) and scout_up(row-1, col+1)):
+                go_up(row-1, col-1)
+                go_up(row-1, col+1)
 
         if ware_map[row-1][col] == '.' and ware_map[row-1][col+1] == '.':
-            ware_map[row-1][col],ware_map[row][col] = ware_map[row][col], ware_map[row-1][col] # swaps the content of box' left half
-            ware_map[row-1][col+1],ware_map[row][col+1] = ware_map[row][col+1], ware_map[row-1][col+1] # swaps the content of box' right half
+            ware_map[row-1][col],ware_map[row][col] = ware_map[row][col], ware_map[row-1][col] # moves the box' left half
+            ware_map[row-1][col+1],ware_map[row][col+1] = ware_map[row][col+1], ware_map[row-1][col+1] # moves the box' right half
 
     else: # is robot
         if ware_map[row-1][col] == '[':
@@ -35,7 +70,7 @@ def go_up(row, col):
         elif ware_map[row-1][col] == ']':
             go_up(row-1, col-1)
         if ware_map[row-1][col] == '.':
-            ware_map[row-1][col],ware_map[row][col] = ware_map[row][col], ware_map[row-1][col] # swaps the content
+            ware_map[row-1][col],ware_map[row][col] = ware_map[row][col], ware_map[row-1][col] # moves robot
             rob_row -= 1
 
 def go_right(row, col):
@@ -54,15 +89,15 @@ def go_right(row, col):
             go_right(row, col+2)
 
         if ware_map[row][col+2] == '.':
-            ware_map[row][col+2],ware_map[row][col+1] = ware_map[row][col+1], ware_map[row][col+2] # swaps the content of box' right half
-            ware_map[row][col+1],ware_map[row][col] = ware_map[row][col], ware_map[row][col+1] # swaps the content of box' left half
+            ware_map[row][col+2],ware_map[row][col+1] = ware_map[row][col+1], ware_map[row][col+2] # moves the box' right half
+            ware_map[row][col+1],ware_map[row][col] = ware_map[row][col], ware_map[row][col+1] # moves the box' left half
     
     else: # is robot
         if ware_map[row][col+1] == '[':
                 go_right(row, col+1)
 
         if ware_map[row][col+1] == '.':
-            ware_map[row][col+1],ware_map[row][col] = ware_map[row][col], ware_map[row][col+1] # swaps the content
+            ware_map[row][col+1],ware_map[row][col] = ware_map[row][col], ware_map[row][col+1] # moves the robot
             rob_col += 1
 
 def go_down(row, col):
@@ -84,22 +119,20 @@ def go_down(row, col):
             go_down(row+1, col+1)
 
         elif ware_map[row+1][col] == ']' and ware_map[row+1][col+1] == '[': # moving double boxes
-            below_two_boxes = [ware_map[row+2][col-1], ware_map[row+2][col], ware_map[row+2][col+1], ware_map[row+2][col+2]]
-            if '#' in below_two_boxes:
-                return
-            go_down(row+1, col-1)
-            go_down(row+1, col+1)
+            if scout_down(row+1, col-1) and scout_down(row+1, col+1):
+                go_down(row+1, col-1)
+                go_down(row+1, col+1)
 
         if ware_map[row+1][col] == '.' and ware_map[row+1][col+1] == '.':
-            ware_map[row+1][col],ware_map[row][col] = ware_map[row][col], ware_map[row+1][col] # swaps the content
-            ware_map[row+1][col+1],ware_map[row][col+1] = ware_map[row][col+1], ware_map[row+1][col+1] # swaps the content
+            ware_map[row+1][col],ware_map[row][col] = ware_map[row][col], ware_map[row+1][col] # moves the box' left half
+            ware_map[row+1][col+1],ware_map[row][col+1] = ware_map[row][col+1], ware_map[row+1][col+1] # moves the box' right half
     else: # is robot
         if ware_map[row+1][col] == '[':
             go_down(row+1, col)
         elif ware_map[row+1][col] == ']':
             go_down(row+1, col-1)
         if ware_map[row+1][col] == '.':
-            ware_map[row+1][col],ware_map[row][col] = ware_map[row][col], ware_map[row+1][col] # swaps the content of left
+            ware_map[row+1][col],ware_map[row][col] = ware_map[row][col], ware_map[row+1][col] # moves the robot
             rob_row += 1
 
 def go_left(row, col):
@@ -115,16 +148,16 @@ def go_left(row, col):
 
     if ware_map[row][col-1] == '.':
         if is_box:
-            ware_map[row][col-1],ware_map[row][col] = ware_map[row][col], ware_map[row][col-1] # swaps the content of box' left half
-            ware_map[row][col],ware_map[row][col+1] = ware_map[row][col+1], ware_map[row][col] # swaps the content of box' right half
+            ware_map[row][col-1],ware_map[row][col] = ware_map[row][col], ware_map[row][col-1] # moves the box' left half
+            ware_map[row][col],ware_map[row][col+1] = ware_map[row][col+1], ware_map[row][col] # moves the box' right half
         else:
-            ware_map[row][col-1],ware_map[row][col] = ware_map[row][col], ware_map[row][col-1] # swaps the content
+            ware_map[row][col-1],ware_map[row][col] = ware_map[row][col], ware_map[row][col-1] # moves the robot
             rob_col -= 1
 
 # wall = '#'
 # box = 'O' (big O)
 # robot = '@'
-FILENAME = "15/L15.txt"
+FILENAME = "2024/15/L15.txt"
 with open(FILENAME, encoding="UTF8") as f:
     INPUT = f.readlines()
 
@@ -168,7 +201,7 @@ print("Start state:")
 for r in ware_map:
     print(''.join(r))
 
-# Normal iteration
+# Fast iteration
 for i,op in enumerate(instructions):
     match op:
         case '^':
@@ -231,26 +264,16 @@ while True:
         print("Move",str(i), '('+op+') :')
         for r in ware_map:
             print(''.join(r))
-        i += 1
-"""
-
-""" GPS_sum = 0
-for i,row in enumerate(ware_map[1:len(ware_map)-1], 1):
-    for j,col in enumerate(row[1:len(ware_map[0])-1],1):
-        if col == '[':
-            GPS_sum += 100*i+j """
+        i += 1"""
 
 
 GPS_sum = 0
-for i,row in enumerate(ware_map):
-    for j,col in enumerate(row):
+for i,row in enumerate(ware_map[1:len(ware_map)-1], 1):
+    for j,col in enumerate(row[1:len(ware_map[0])-1],1):
         if col == '[':
             GPS_sum += 100*i+j
-print()
-print("End state:")
+
+print("\nEnd state:")
 for r in ware_map:
     print(''.join(r))
 print("Sum of all boxes' GPS coordinates:",GPS_sum)
-# 1574861 is too low
-# 606 boxes in the end and at the start
-print(len(instructions))
