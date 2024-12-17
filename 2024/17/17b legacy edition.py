@@ -93,15 +93,6 @@ program = list(map(int,(re.findall(r"\d+",INPUT[4]))))
 print(program)
 
 start_a = 164278899142274 #pow(8,14)
-# 35000005127958 gives 15 numbers idek
-# 35184372080000
-# 119137648299999 ger nästan rätt svar om man letar efter inputens output men tar exemplets operationer SKJUT MIG
-# start is over 5424195
-# start is over 16571082
-# start is over 16816652
-# start is over 20295965 
-# start is over 25576196
-# start is over 100000000036255
 result = []
 while start_a < pow(8,17) and not keyboard.is_pressed('§'):
     #print(start_a)
