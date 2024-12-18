@@ -27,15 +27,33 @@ for r in mem_map:
 
 
 s_x = s_y = 0
+
 e_x = map_width - 1
 e_y = map_height - 1
-queue = [(s_x,s_y)]
+queue = [(s_x,s_y,0)]
 visited = [(s_x,s_y)]
 while len(queue) != 0:
     current = queue.pop(0)
     x = current[0]
     y = current[1]
+    steps = current[2]
+    if (x,y) == (e_x,e_y):
+        break
+    
     if x > 0 and mem_map[x-1][y] != '#' and (x-1,y) not in visited:
         visited.append((x-1,y))
-        queue.append((x-1,y))
+        queue.append((x-1,y,steps+1))
+    if x < map_width - 1 and mem_map[x+1][y] != '#' and (x+1,y not in visited:
+        visited.append((x+1,y))
+        queue.append((x+1,y,steps+1))
+    if y > 0 and mem_map[x][y-1] != '#' and (x,y-1) not in visited:
+        visited.append((x,y-1))
+          queue.append((x,y-1,steps+1))
+    if y < map_height - 1 and mem_map[x][y+1] != '#' and (x,y+1) not in visited:
+        visited.append((x,y+1))
+        queue.append((x,y+1,steps+1))
+
+print(steps,"is the shortest path to escape the memory!")
+        
+        
         
