@@ -2,32 +2,22 @@ from PIL import Image
 import os
 import sys
 import keyboard
+import time
 
+start = time.time()
 slowmode = False
 slowmode_counter = 0
 def BFS(direction: int, row: int, col: int, visited: dict, score: int):
     global slowmode
-    global slowmode_counter
     global lowest_score
-    global current_recursion_depth
     global nice_seats
-    global duplicates
-    current_recursion_depth += 1
-
-    # weirdo way of letting the simulation run free for a while and then entering slowmode
-    #if row == 131: 
-    #    slowmode_counter += 1
-    #    if slowmode_counter == 100:
-    #       slowmode = True
-    
-
 
     if slowmode:  
-        #while not keyboard.is_pressed('space') and not keyboard.is_pressed('z'):
-        #    pass
+        while not keyboard.is_pressed('space') and not keyboard.is_pressed('z'):
+            pass
 
-        #while keyboard.is_pressed('space'):
-        #    pass
+        while keyboard.is_pressed('space'):
+            pass
         
         terminal_print = ""
         for i,r in enumerate(maze_map):
@@ -50,19 +40,15 @@ def BFS(direction: int, row: int, col: int, visited: dict, score: int):
         os.system('cls')
         print(terminal_print)
 
-    #print("Score:",score,)
-    print("Length of visited:",len(visited))
-    print("Nice seats:",nice_seats)
+
+    # This path is irrelevant
+    if score > 74392:
+        return False
 
     res1 = res2 = res3 = res4 = is_part_of_winning_path = False
     visited[(row,col,direction)] = score
     if row == e_row and col == e_col:
-        if score <= lowest_score:
-            if score == lowest_score:
-                duplicates += 1
-            lowest_score = score
-            print("\nNew record path with score",score,"at recursion depth",current_recursion_depth)
-        current_recursion_depth -= 1
+        lowest_score = min(score, lowest_score)
         if score == 74392: #11048: #7036:
             is_part_of_winning_path = True
             if (row,col) not in nice_seats:
@@ -111,13 +97,12 @@ def BFS(direction: int, row: int, col: int, visited: dict, score: int):
         elif ((row,col+1,1) not in visited) or ((row,col+1,1) in visited and score+1 <= visited[(row,col+1,1)]):
             res4 = BFS(1, row, col+1, visited, score+1)
     
-    current_recursion_depth -= 1
     is_part_of_winning_path = res1 or res2 or res3 or res4
     if is_part_of_winning_path and (row,col) not in nice_seats:
         nice_seats.append((row,col))
     return is_part_of_winning_path
 
-FILENAME = "16/L16.txt"
+FILENAME = "2024/16/L16.txt"
 with open(FILENAME, encoding="UTF8") as f:
     INPUT = f.readlines()
 
@@ -136,28 +121,13 @@ for i,r in enumerate(INPUT):
             e_col = j
     maze_map.append(current_row)
 
-duplicates = 0
-current_recursion_depth = 0
 s_visit = {}
 lowest_score = 1000000
 nice_seats = []
 
 BFS(1, s_row, s_col, s_visit, 0)
 print("Lowest score possible:",lowest_score)
-print("Duplicate solutions:",duplicates)
-print("Recursion depth:",current_recursion_depth)
 print("Nice seats:",len(nice_seats))
-# 393 is too low
-# 409 is too low
-# 865 is too high
 
-
-terminalPRINT = ""
-for i,ROW in enumerate(maze_map):
-    for j,COL in enumerate(ROW):
-        if (i,j) in nice_seats:
-            terminalPRINT += 'O'
-        else:
-            terminalPRINT += COL
-    terminalPRINT += '\n'
-print(terminalPRINT)
+stop = time.time()
+print("This thing took",stop-start,"seconds.")

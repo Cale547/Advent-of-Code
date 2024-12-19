@@ -57,4 +57,3 @@ for byte in byte_list[init_bytes:]:
         print("Byte with coordinates",byte[0],byte[1],"blocked the exit of!")
         break
     print("Path with",steps,"steps found.")
-
