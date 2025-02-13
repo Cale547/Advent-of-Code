@@ -1,4 +1,4 @@
-package Day02;
+package Year2020.Day02;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class Day2 {
     public static int solve(int part) throws IOException {
-        Scanner in = new Scanner(new File("day2/input.txt"));
+        Scanner in = new Scanner(new File("Day02/input.txt"));
         Pattern p = Pattern.compile("(\\d+)-(\\d+) (.): (\\w+)");
         int validPasswords = 0;
 

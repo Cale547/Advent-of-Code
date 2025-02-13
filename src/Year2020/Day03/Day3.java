@@ -1,4 +1,4 @@
-package Day03;
+package Year2020.Day03;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,13 +7,14 @@ import java.util.Scanner;
 
 public class Day3 {
     public static long solve(int part) throws IOException {
-        Scanner in = new Scanner(new File("day3/input.txt"));
+        Scanner in = new Scanner(new File("Day03/input.txt"));
         
         ArrayList<String> treeMap = new ArrayList<>();
         while (in.hasNextLine()) {
             treeMap.add(in.nextLine());
         }
-
+        in.close();
+        
         int x = 0;
         int treesEncountered = 0;
         if (part == 1) {
