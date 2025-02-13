@@ -1,4 +1,4 @@
-package day2;
+package Day02;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class d2 {
+public class Day2 {
     public static int solve(int part) throws IOException {
         Scanner in = new Scanner(new File("day2/input.txt"));
         Pattern p = Pattern.compile("(\\d+)-(\\d+) (.): (\\w+)");

@@ -1,12 +1,11 @@
-package day3;
+package Day03;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-public class d3 {
+public class Day3 {
     public static long solve(int part) throws IOException {
         Scanner in = new Scanner(new File("day3/input.txt"));
         

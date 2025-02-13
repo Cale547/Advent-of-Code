@@ -1,11 +1,11 @@
-package day1;
+package Day01;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class d1 {
+public class Day1 {
     public static int part1() throws IOException {
         Scanner in = new Scanner(new File("day1/input.txt"));
         ArrayList<Integer> nums = new ArrayList<>();
