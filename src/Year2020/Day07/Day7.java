@@ -98,5 +98,5 @@ public class Day7 {
     public static void main(String[] args) throws IOException {
         System.out.println("Part 1: " + solve(1));
         System.out.println("Part 2: " + solve(2));
-    }   
+    }
 }
