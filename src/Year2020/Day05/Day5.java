@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-import Year2020.testing;
-
 public class Day5 {
     public static int solve(int part) throws IOException {
         Scanner in = new Scanner(new File("src/Year2020/Day05/input.txt"));
