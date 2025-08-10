@@ -10,52 +10,95 @@ public class Day14 {
 
     public static String getBinaryString() {return "";}
 
-    public static int solve(int part, String input) throws IOException {
+    public static long solve(int part, String input) throws IOException {
         Scanner in = new Scanner(new File("src/Year2020/Day14/" + input + ".txt"));
         String mask = "";
-        HashMap<Integer, Long> memory = new HashMap<>();
+        HashMap<Long, Long> memory = new HashMap<>();
 
-        while (in.hasNextLine()) {
-            String current = in.nextLine();
-            //System.out.println(current);
-            if (current.split(" ")[0].equals("mask")) {
-                current = current.replace("X", "0");
-                mask = current.split(" ")[2];
+        if (part == 1) {
+            while (in.hasNextLine()) {
+                String current = in.nextLine();
+                if (current.split(" ")[0].equals("mask")) {
+                    mask = current.split(" ")[2];
+                } else {
+                    Matcher m = Pattern.compile("\\[\\d+\\]").matcher(current);
+                    if (m.find()) {
+                        int index = Integer.parseInt(m.group().replaceAll("[^\\d]", ""));
+                        StringBuilder value = new StringBuilder(Long.toBinaryString(Long.parseLong(current.split(" ")[2])));
+                        value = new StringBuilder("0".repeat(36-value.length()) + value);
 
-                System.out.println("Mask: " + current.split(" ")[2]);
-            } else {
-                Matcher m = Pattern.compile("\\[\\d+\\]").matcher(current);
-                //System.out.println(current);
-                if (m.find()) {
-                    int index = Integer.parseInt(m.group().substring(1, m.group().length()-1));
-                    long value = Long.parseLong(current.split(" ")[2]);
-                    String valString = "0"*(32-len(value)) + value;
-                    
-                    System.out.println("Value: " + Long.toBinaryString(value));
-                    System.out.println("Mask: " + mask);
+                        System.out.println("Valu: " + value);
+                        System.out.println("Mask: " + mask);
+                        
+                        assert(value.length() == mask.length()) : "Wrong lengths";
+                        for (int i = 0; i < value.length(); i++) {
+                            if (mask.charAt(i) != 'X') {
+                                value.setCharAt(i, mask.charAt(i));
+                            }
+                        }
+                        System.out.println("Valu: " + value);
 
-                    // System.out.println("Value: " + value);
-                    // System.out.println("Index " + index);
-
-                    memory.put(index, value);
+                        memory.put((long) index, Long.parseLong(value.toString(), 2));
+                        
+                    }
                 }
-                break;
-
+                System.out.println();
 
             }
+        }
 
-        }    
+        if (part == 2) {
+            while (in.hasNextLine()) {
+                String current = in.nextLine();
+                if (current.split(" ")[0].equals("mask")) {
+                    mask = current.split(" ")[2];
+                } else {
+                    Matcher m = Pattern.compile("\\[\\d+\\]").matcher(current);
+                    if (m.find()) {
+                        long value = Long.parseLong(current.split(" ")[2]);
+
+                        StringBuilder index = new StringBuilder(Integer.toBinaryString(Integer.parseInt(m.group().replaceAll("[^\\d]", ""))));
+                        index = new StringBuilder("0".repeat(36-index.length()) + index);
+
+                        
+                        assert(index.length() == mask.length()) : "Wrong lengths";
+                        for (int i = 0; i < index.length(); i++) {
+                            if (mask.charAt(i) != '0') {
+                                index.setCharAt(i, mask.charAt(i));
+                            }
+                        }
+                        String indexString = index.toString();
+                        int nFloatBits = indexString.length() - indexString.replaceAll("X", "").length();
+                        int nAddresses = (int) Math.pow(2, nFloatBits);
+                        
+                        for (int i = 0; i < nAddresses; i++) {
+                            String indexCopy = indexString;
+                            String addressMod = Integer.toBinaryString(i);
+                            addressMod = "0".repeat(nFloatBits-addressMod.length()) + addressMod;
+
+                            for (char c : addressMod.toCharArray()) {
+                                indexCopy = indexCopy.replaceFirst("X",""+c);
+                            }
+                            memory.put(Long.parseLong(indexCopy,2), value);
+                        }
+                    }
+                
+                }
+            }
+        }
+
+        long sum = 0;
+        for (Long l : memory.keySet()) {
+            sum += memory.get(l);
+        } 
     
-    
-    
-        System.out.println("Done!");
-        return 0;
+        return sum;
     }
 
 
 
     public static void main(String[] args) throws IOException {
-            System.out.println("Part 1: " + solve(1, "ex"));
-            // System.out.println("Part 2: " + solve(2, "input"));
+            //System.out.println("Part 1: " + solve(1, "input"));
+            System.out.println("Part 2: " + solve(2, "input"));
     }
 }
