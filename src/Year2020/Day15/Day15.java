@@ -1,11 +1,8 @@
 package Year2020.Day15;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Scanner;
 
 public class Day15 {
     public static int startNumberInit(ArrayList<Integer> numbers, HashMap<Integer,Integer> lastTurnOfNumberMap, Integer[] startingNumbers) {
@@ -41,6 +38,8 @@ public class Day15 {
             case "input": currentTurn = startNumberInit(numbers, lastTurnOfNumberMap, new Integer[]{9,6,0,10,18,2,1}); break;
             default: System.out.println("Oops! :D"); break;
         }
+
+
 
         while (currentTurn <= targetIndex) {
             //if (currentTurn % 100000 == 0)
