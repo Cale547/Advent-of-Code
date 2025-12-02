@@ -32,4 +32,3 @@ for id_range in ranges:
 
 print(f"There are {invalid_counter} invalid IDs in the specified ranges")
 print(f"Sum of all invalid IDs is {sum(invalid_ids)}")
-print(invalid_ids)
