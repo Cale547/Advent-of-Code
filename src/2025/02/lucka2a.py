@@ -17,7 +17,7 @@ for id_range in ranges:
         if id_length % 2 != 0:
             continue
         #print(int(id_length/2))
-        possible_pattern = current_id[0:int(id_length/2)]
+        possible_pattern = current_id[0:id_length//2] #Double slash courtesy of Mattias
         if current_id.count(possible_pattern) == 2:
             invalid_counter += 1
             invalid_ids.append(int(current_id))
