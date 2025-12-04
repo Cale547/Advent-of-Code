@@ -1,16 +1,21 @@
 import math
 
-FILENAME = "src/2025/03/input.txt"
+FILENAME = "2025/03/input.txt"
 with open(FILENAME, encoding="UTF8") as f:
     INPUT = f.readlines()
 
-battery_amount = 2
+battery_amount = 12
 max_joltages = []
 for bank_id,bank in enumerate(INPUT):
+    #print(f"{battery_amount},{len(bank)}")
+    if battery_amount > len(bank):
+        print("You specified a battery amount larger than the bank size...")
+        break
     max_found = False
 
     test_number = int('9'*battery_amount)
     while not max_found:
+        #print(test_number)
         str_number = str(test_number)
         digits = list(str_number)
         bad_number = False
@@ -20,7 +25,7 @@ for bank_id,bank in enumerate(INPUT):
             try:
                 index = bank[start_index:].index(digits[i])
             except ValueError:
-                test_number -= int(math.pow(10, battery_amount-1-i))
+                test_number -= int(math.pow(10, battery_amount-1-i))    
                 bad_number = True
                 break
 
