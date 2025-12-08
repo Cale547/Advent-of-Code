@@ -64,4 +64,4 @@ for ingredient in ingredients:
         else:
             pass
 
-print(f"{fresh_count} of the available ingredient IDs are fresh: ")
+print(f"{fresh_count} of the available ingredient IDs are fresh.")
