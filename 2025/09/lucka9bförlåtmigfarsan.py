@@ -11,7 +11,7 @@ with open(FILENAME, encoding="UTF8") as f:
     INPUT = f.readlines()
 
 tile_map = []
-my_range = 100000 #100000
+my_range = 98415 #100000
 for i in range(my_range):
     row = []
     for j in range(my_range):
@@ -22,7 +22,7 @@ for i in range(my_range):
 
 red_tiles = []
 for i in range(-1,len(INPUT)-1):
-    print(i)
+    #print(i)
     row1 = INPUT[i].strip()
     row2 = INPUT[i+1 ].strip()
     #print(f"{row1} and {row2}")
@@ -48,14 +48,14 @@ for i in range(-1,len(INPUT)-1):
             tile_map[y1][x] = BORDER
 print("Gjorde en fin slinga")
 
-is_green = []
-for i in range(my_range):
-    is_green.append(False)
+# is_green = []
+# for i in range(my_range):
+#     is_green.append(False)
 
-for i,row in enumerate(tile_map):
-    for j,col in enumerate(row):
-        if is_green[j]:
-            tile_map[j][i] = BORDER
+# for i,row in enumerate(tile_map):
+#     for j,col in enumerate(row):
+#         if is_green[j]:
+#             tile_map[j][i] = BORDER
 
 
 # tile_map border is done
@@ -64,6 +64,8 @@ print("Filling the tilemap with A")
 #approaching from above
 stop = [False]*my_range
 for i in range(len(tile_map)):
+    if i % 1000 == 0:
+        print(i)
     row = tile_map[i]
     for j in range(len(row)):
         col = row[j]
@@ -77,6 +79,8 @@ for i in range(len(tile_map)):
 #approaching from below
 stop = [False]*my_range
 for i in range(len(tile_map)-1,-1,-1):
+    if i % 1000 == 0:
+        print(i)
     row = tile_map[i]
     for j in range(len(row)):
         col = row[j]
@@ -92,6 +96,8 @@ stop = [False]*my_range
 for j in range(len(tile_map[0])):
     #col = tile_map[0][j]
     for i in range(len(tile_map)):
+        if i % 1000 == 0:
+            print(i)
         row = tile_map[i]
         if stop[i]:
             continue
@@ -105,6 +111,8 @@ stop = [False]*my_range
 for j in range(len(tile_map[0])-1, -1,-1):
     #col = tile_map[0][j]
     for i in range(len(tile_map)):
+        if i % 1000 == 0:
+            print(i)
         row = tile_map[i]
         if stop[i]:
             continue
@@ -122,6 +130,8 @@ for j in range(len(tile_map[0])-1, -1,-1):
 max_area = 0
 print("Looking for max area")
 for i,r1 in enumerate(red_tiles):
+    if i % 1000 == 0:
+        print(i)
     for r2 in red_tiles[i:]:
         # rectangle has corner min(x1,y1), max(x1,y1)
         x1 = r1[0]
@@ -134,10 +144,10 @@ for i,r1 in enumerate(red_tiles):
         legal_area = True
         for i in range(min(x1,x2), max(x1,x2)+1):
             row = tile_map[i]
-            for j in range(min(y1,y2), max(y1,y2)+1):
-                if tile_map[j][i] == OUTSIDE_BORDER:
+            for k in range(min(y1,y2), max(y1,y2)+1):
+                if tile_map[k][i] == OUTSIDE_BORDER:
             #if row.count(OUTSIDE_BORDER) > 0:
-                    #print(f"Failed at i={i}, j={j}")
+                    #print(f"Failed at i={i}, k={k}")
                     legal_area = False
                     break
             if not legal_area:
